@@ -13,8 +13,6 @@ app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # helper mehtod to check if filetype is allowed
-
-
 def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -40,14 +38,16 @@ def index():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             # do julias function, classify image in folder /uploads
-            return redirect(url_for('uploaded_file',
-                                    filename=filename))
+            return redirect('/compare/'+filename)
     return render_template('index.html')
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'],
-                               filename)
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+@app.route('/compare/<filename>')
+def compare_images(filename):
+    return render_template('compare.html', image_url='/uploads/'+filename, classified_image_url='/uploads/classified_'+filename)
 
 if __name__ == '__main__':
     app.run(debug=True)
