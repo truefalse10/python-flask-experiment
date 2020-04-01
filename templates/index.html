@@ -15,9 +15,9 @@
     </ul>
   {% endif %}
 {% endwith %}
-	<form method="POST">
-		<h3>Please upload image</h3>
-		<input type="file" name="upload" id="input-file"><br>
+	<form method="POST" enctype="multipart/form-data">
+		<h3>Please upload image jpg</h3>
+		<input type="file" name="file" id="input-file"><br>
 		<button type="submit">classify!</button>
 	</form>
 </body>
