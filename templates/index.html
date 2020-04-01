@@ -1,24 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Julia's Code</title>
-</head>
-<body>
+{% extends 'layout.html' %}
+
+{% block content %}
 {% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class=flashes>
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
+{% if messages %}
+<ul class=flashes>
+  {% for message in messages %}
+  <li>{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
 {% endwith %}
-	<form method="POST" enctype="multipart/form-data">
-		<h3>Please upload image jpg</h3>
-		<input type="file" name="file" id="input-file"><br>
-		<button type="submit">classify!</button>
-	</form>
-</body>
-</html>
+<div class="row">
+  <div class="col-sm-12">
+    <form method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="input-file">pleaese upload image (.jpg only)</label>
+        <input type="file" class="form-control-file" name="file" id="input-file">
+      </div>
+      <button type="submit" class="btn btn-primary" id="submit" disabled>
+        <span class="spinner spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        submit
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+  const submitBtn = document.getElementById("submit");
+  const fileInput = document.getElementById("input-file");
+
+  fileInput.onchange = event => {
+    if (fileInput.files.length) {
+      submitBtn.attributes.removeNamedItem("disabled")
+    }
+  }
+
+  submitBtn.onclick = event => {
+    submitBtn.classList.add("loading")
+  }
+
+</script>
+{% endblock %}

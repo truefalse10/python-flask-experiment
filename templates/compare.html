@@ -1,14 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>classified images</title>
-</head>
-<body>
-  <p>uploaded_image: {{image_url}}</p>
-  <img src={{image_url}} width="400">
-  <p>classified_image: {{classified_image_url}}</p>
-  <img src={{classified_image_url}} width="400">
-</body>
-</html>
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="col-sm-6">
+    <p>Original Image:</p>
+    <img src={{image_url}} class="image">
+  </div>
+  <div class="col-sm-6">
+    <p><strong>Classified Image:</strong></p>
+    <img src={{classified_image_url}} class="image">
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <a href="/" type="button" class="btn btn-primary">try again</a>
+  </div>
+</div>
+{% endblock %}
